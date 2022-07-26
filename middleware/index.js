@@ -1,7 +1,7 @@
-const { verifyToken } = require("../util/jwt.util.js");
+const { verifyToken } = require("../utils/jwt.util.js");
 
 exports.Validate = async (req, res, next) => {
-  const { access_token } = req.cookies;
+  let access_token = req.headers["access-token"];
   req.isValidate = false;
   req.userLogged = null;
   const verif = await verifyToken(access_token);
@@ -13,10 +13,6 @@ exports.Validate = async (req, res, next) => {
 };
 
 exports.Authorize = async (req, res, next) => {
-  if (!req.isValidate)
-    return res
-      .status(403)
-      .json({ httpCode: 403, message: "Please Login First!" });
-
+  if (!req.isValidate) return res.status(403).json({ httpCode: 403, message: "Please Login First!" });
   return next();
 };

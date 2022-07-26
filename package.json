@@ -1,25 +1,33 @@
 {
-  "name": "sim-smpn2-be",
+  "name": "sim-smpn2-backend",
   "version": "1.0.0",
-  "description": "sim-smpn2-be",
+  "description": "sim-smpn2-backend",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "init-db": "node util/init-db.util.js",
+    "init-db": "node utils/init-db.util.js",
     "migrate": "npx sequelize-cli db:migrate",
     "seed": "npx sequelize-cli db:seed:all"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AqidatulIzzahch/sim-smpn2-be.git"
+  },
   "keywords": [
     "backend",
-    "sim"
+    "sim",
+    "smpn2"
   ],
-  "author": "Aqidatul Izzah",
+  "author": "kelompok 2",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AqidatulIzzahch/sim-smpn2-be/issues"
+  },
+  "homepage": "https://github.com/AqidatulIzzahch/sim-smpn2-be",
   "dependencies": {
     "bcrypt": "^5.0.1",
-    "cloudinary": "^1.30.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",

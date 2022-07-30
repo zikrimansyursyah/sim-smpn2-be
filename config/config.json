@@ -1,0 +1,30 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "postgres",
+    "database": "sim_smpn2",
+    "host": "localhost",
+    "dialect": "postgresql"
+  },
+  "test": {
+    "username": "postgres",
+    "password": "postgres",
+    "database": "sim_smpn2",
+    "host": "localhost",
+    "dialect": "postgresql"
+  },
+  "production": {
+    "username": "bfungapmnhhwpy",
+    "password": "ff3482df794fc7e5173d8f2cb1491802ac28cc598c2624d0f4b32c51f59a21f3",
+    "database": "dar92ou9n4ekio",
+    "host": "ec2-52-73-184-24.compute-1.amazonaws.com",
+    "dialect": "postgresql",
+    "dialectOptions": {
+      "ssl": {
+          "require": true,
+          "rejectUnauthorized": false
+      }
+    }
+
+  }
+}

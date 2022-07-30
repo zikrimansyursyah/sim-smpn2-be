@@ -34,5 +34,8 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 db.users = require("./users.js")(sequelize, Sequelize);
+db.users_type = require("./users_type.js")(sequelize, Sequelize);
+db.kelas = require("./kelas.js")(sequelize, Sequelize);
+db.mata_pelajaran = require("./mata_pelajaran.js")(sequelize, Sequelize);
 
 module.exports = db;

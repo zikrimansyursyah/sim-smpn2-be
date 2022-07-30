@@ -21,9 +21,39 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         unique: true,
       },
+      nisn: {
+        type: DataTypes.STRING,
+        unique: true,
+      },
+      no_induk_sekolah: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+      },
+      tingkat_kelas: DataTypes.INTEGER,
+      id_kelas: DataTypes.INTEGER,
       nama_lengkap: {
         type: DataTypes.STRING,
         allowNull: false,
+      },
+      nama_panggilan: DataTypes.STRING,
+      tempat_lahir: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      tanggal_lahir: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
+      photo: {
+        type: DataTypes.STRING,
+        get() {
+          const foto = this.getDataValue("photo")?.split(";");
+          return foto?.filter((item) => item !== "");
+        },
+        set(val) {
+          this.setDataValue("photo", (val += ";"));
+        },
       },
       username: {
         type: DataTypes.STRING,
@@ -34,18 +64,58 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      no_telp: DataTypes.STRING,
+      no_telp: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       email: DataTypes.STRING,
-      alamat: DataTypes.STRING,
-      mata_pelajaran: DataTypes.STRING,
+      alamat: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      kelurahan: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      kecamatan: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      kota: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      provinsi: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      mata_pelajaran: DataTypes.INTEGER,
       jenis_kelamin: {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      status_pernikahan: DataTypes.STRING,
       pendidikan_terakhir: DataTypes.STRING,
+      asal_sekolah: DataTypes.STRING,
+      tahun_lulus_sekolah: DataTypes.INTEGER,
+      gelar: DataTypes.STRING,
       jabatan: DataTypes.STRING,
       jabatan_tambahan: DataTypes.STRING,
-      status: DataTypes.BOOLEAN,
+      nama_ayah: DataTypes.STRING,
+      nama_ibu: DataTypes.STRING,
+      is_active: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+      },
+      is_delete: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+      },
+      createdBy: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      updateBy: DataTypes.INTEGER,
     },
     {
       sequelize,

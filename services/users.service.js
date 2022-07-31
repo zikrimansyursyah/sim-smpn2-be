@@ -26,10 +26,11 @@ exports.login = async (req) => {
     if (!user) {
       return {
         httpCode: httpCode.notFound,
+        message: responseMessage.userNotFound,
       };
     }
 
-    const checkPassword = await bcrypt.compare(password, user.password);
+    const checkPassword = bcrypt.compareSync(password, user.password);
     if (!checkPassword) {
       return {
         httpCode: httpCode.forbidden,

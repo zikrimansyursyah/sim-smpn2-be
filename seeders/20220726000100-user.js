@@ -12,7 +12,7 @@ module.exports = {
         tempat_lahir: "SUPERADMIN",
         tanggal_lahir: new Date(),
         username: "superadmin",
-        password: "$2a$17$seOExPuTVLe9SS9nKob3jedvmpYJb4ZHd4xgCdp.yhU88048/84mi", //Superadmin@098
+        password: "$2a$08$u1qKi5bn36V65zynm4wfIenEDsY/KX3Plux0ejIWUk4LO4hUqwlNa", //Superadmin@098
         no_telp: "081234567890",
         alamat: "SUPERADMIN",
         kelurahan: "SUPERADMIN",

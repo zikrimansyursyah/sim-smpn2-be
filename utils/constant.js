@@ -17,6 +17,7 @@ const responseMessage = {
   200: "Success",
   202: "Accepted",
   wrongPassword: "Password yang anda masukan salah",
+  userNotFound: "User tidak terdaftar",
 };
 
 module.exports = {

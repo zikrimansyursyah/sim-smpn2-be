@@ -84,7 +84,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING(50),
       },
-      kota: {
+      kabupaten: {
         allowNull: false,
         type: Sequelize.STRING(50),
       },
@@ -103,7 +103,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING(20),
       },
-      jenis_kelamin: {
+      status_pernikahan: {
         type: Sequelize.STRING(20),
       },
       pendidikan_terakhir: {

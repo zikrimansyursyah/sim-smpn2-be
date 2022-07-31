@@ -7,7 +7,7 @@ const dotenv = require("dotenv");
 const PORT = process.env.PORT || 5000;
 dotenv.config();
 
-const userController = require("./controllers/user.controller.js");
+const userController = require("./controllers/users.controller.js");
 const { Validate, Authorize } = require("./middleware");
 
 app.use(cors());

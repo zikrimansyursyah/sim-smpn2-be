@@ -45,16 +45,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DATE,
         allowNull: false,
       },
-      photo: {
-        type: DataTypes.STRING,
-        get() {
-          const foto = this.getDataValue("photo")?.split(";");
-          return foto?.filter((item) => item !== "");
-        },
-        set(val) {
-          this.setDataValue("photo", (val += ";"));
-        },
-      },
+      photo: DataTypes.STRING,
       username: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -81,7 +72,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      kota: {
+      kabupaten: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -115,7 +106,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      updateBy: DataTypes.INTEGER,
+      updatedBy: DataTypes.INTEGER,
     },
     {
       sequelize,

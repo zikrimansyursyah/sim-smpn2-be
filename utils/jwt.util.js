@@ -1,7 +1,8 @@
 const jwt = require("jsonwebtoken");
+const { httpCode, responseMessage } = require("./constant");
 
-exports.generateToken = async (payload) => {
-  return await jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: "12h" });
+exports.generateToken = async (payload, isRemember) => {
+  return await jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: isRemember ? "168h" : "12h" });
 };
 
 exports.decodeToken = async (payload) => {
@@ -9,23 +10,19 @@ exports.decodeToken = async (payload) => {
 };
 
 exports.verifyToken = async (payload) => {
-  let result = {
-    httpCode: 403,
-    isValid: false,
-    data: null,
-    message: null,
-  };
   try {
     const verif = await jwt.verify(payload, process.env.JWT_SECRET_KEY);
     if (verif) {
-      result.httpCode = 200;
-      result.isValid = true;
-      result.data = verif;
-      result.message = "success";
+      return {
+        httpCode: httpCode.ok,
+        isValid: true,
+        data: verif,
+      };
     }
-    return result;
   } catch (error) {
-    result.message = "Access Token invalid!";
-    return result;
+    return {
+      httpCode: httpCode.notFound,
+      isValid: false,
+    };
   }
 };

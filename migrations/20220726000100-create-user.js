@@ -31,6 +31,10 @@ module.exports = {
       },
       tingkat_kelas: {
         type: Sequelize.INTEGER,
+        references: {
+          model: "kelas_type",
+          key: "id",
+        },
       },
       id_kelas: {
         type: Sequelize.INTEGER,
@@ -78,24 +82,24 @@ module.exports = {
       },
       kelurahan: {
         allowNull: false,
-        type: Sequelize.STRING(50),
+        type: Sequelize.STRING(20),
       },
       kecamatan: {
         allowNull: false,
-        type: Sequelize.STRING(50),
+        type: Sequelize.STRING(20),
       },
       kabupaten: {
         allowNull: false,
-        type: Sequelize.STRING(50),
+        type: Sequelize.STRING(20),
       },
       provinsi: {
         allowNull: false,
-        type: Sequelize.STRING(50),
+        type: Sequelize.STRING(20),
       },
-      mata_pelajaran: {
+      id_mata_pelajaran: {
         type: Sequelize.INTEGER,
         references: {
-          model: "mata_pelajaran",
+          model: "mapel",
           key: "id",
         },
       },

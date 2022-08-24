@@ -1,28 +1,29 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class mata_pelajaran extends Model {
+  class kelas_type extends Model {
     static associate(models) {
-      mata_pelajaran.hasMany(models.users);
+      kelas_type.hasMany(models.users);
+      kelas_type.hasMany(models.kelas);
+      kelas_type.hasMany(models.mapel);
     }
   }
-  mata_pelajaran.init(
+  kelas_type.init(
     {
       nama: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      kelas: DataTypes.INTEGER,
       createdBy: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      updateBy: DataTypes.INTEGER,
+      updatedBy: DataTypes.INTEGER,
     },
     {
       sequelize,
-      modelName: "mata_pelajaran",
+      modelName: "kelas_type",
     }
   );
-  return mata_pelajaran;
+  return kelas_type;
 };

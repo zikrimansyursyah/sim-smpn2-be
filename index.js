@@ -4,11 +4,13 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const app = express();
 const dotenv = require("dotenv");
-const PORT = process.env.PORT || 5000;
 dotenv.config();
+const PORT = process.env.PORT || 5000;
 
 const userController = require("./controllers/users.controller.js");
-const { Validate, Authorize } = require("./middleware");
+const mapelController = require("./controllers/mapel.controller.js");
+const kelasController = require("./controllers/kelas.controller.js");
+const { Validate } = require("./middleware");
 
 app.use(cors());
 app.use(cookieParser());
@@ -25,6 +27,18 @@ app.post("/login", userController.login);
 app.post("/validate-auth", userController.validateAuth);
 
 // User Routes
+app.get("/dashboard_data", userController.getDashboardAPI);
+app.put("/user/update", userController.updateUserAPI);
+app.post("/user/create", userController.createUserAPI);
+app.post("/guru", userController.findAllTeachersAPI);
+app.post("/siswa", userController.findAllStundetsAPI);
+app.delete("/user/delete", userController.deleteUserAPI);
+
+// Mapel Routes
+app.get("/mapel", mapelController.getAllMapelAPI);
+
+// Kelas Routes
+app.get("/kelas", kelasController.getAllKelasAPI);
 
 app.listen(PORT, () => {
   console.info(`Server running at http://localhost:${PORT}`);

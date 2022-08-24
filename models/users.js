@@ -4,6 +4,9 @@ module.exports = (sequelize, DataTypes) => {
   class users extends Model {
     static associate(models) {
       users.belongsTo(models.users_type);
+      users.belongsTo(models.kelas_type);
+      users.belongsTo(models.kelas);
+      users.belongsTo(models.mapel);
     }
   }
   users.init(
@@ -80,7 +83,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      mata_pelajaran: DataTypes.INTEGER,
+      id_mata_pelajaran: DataTypes.INTEGER,
       jenis_kelamin: {
         type: DataTypes.STRING,
         allowNull: false,

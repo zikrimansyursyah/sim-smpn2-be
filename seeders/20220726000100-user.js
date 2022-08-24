@@ -12,13 +12,13 @@ module.exports = {
         tempat_lahir: "SUPERADMIN",
         tanggal_lahir: new Date(),
         username: "superadmin",
-        password: "$2a$08$u1qKi5bn36V65zynm4wfIenEDsY/KX3Plux0ejIWUk4LO4hUqwlNa", //Superadmin@098
+        password: "U2FsdGVkX1+dpVHNUlWSmXSxIDkO1PSihJH416c+5vw=", //Superadmin@098
         no_telp: "081234567890",
         alamat: "SUPERADMIN",
-        kelurahan: "SUPERADMIN",
-        kecamatan: "SUPERADMIN",
-        kabupaten: "SUPERADMIN",
-        provinsi: "SUPERADMIN",
+        kelurahan: 1101010001,
+        kecamatan: 1101010,
+        kabupaten: 1101,
+        provinsi: 11,
         jenis_kelamin: "Laki-Laki",
         is_active: true,
         is_delete: false,

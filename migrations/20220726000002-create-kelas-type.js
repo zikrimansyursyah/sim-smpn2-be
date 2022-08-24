@@ -1,7 +1,7 @@
 "use strict";
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("kelas", {
+    await queryInterface.createTable("kelas_type", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -11,9 +11,6 @@ module.exports = {
       nama: {
         allowNull: false,
         type: Sequelize.STRING(100),
-      },
-      wali_kelas: {
-        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,
@@ -33,6 +30,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("kelas");
+    await queryInterface.dropTable("kelas_type");
   },
 };

@@ -1,15 +1,20 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class users_type extends Model {
+  class mapel extends Model {
     static associate(models) {
-      users_type.hasMany(models.users);
+      mapel.hasMany(models.users);
+      mapel.belongsTo(models.kelas_type);
     }
   }
-  users_type.init(
+  mapel.init(
     {
       nama: {
         type: DataTypes.STRING,
+        allowNull: false,
+      },
+      kelas: {
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
       createdBy: {
@@ -20,8 +25,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "users_type",
+      modelName: "mapel",
+      freezeTableName: true,
     }
   );
-  return users_type;
+  return mapel;
 };

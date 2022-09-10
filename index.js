@@ -21,7 +21,6 @@ app.use(Validate);
 app.get("/", (req, res) => {
   res.json({ message: "Index running" });
 });
-
 // Auth Routes
 app.post("/login", userController.login);
 app.post("/validate-auth", userController.validateAuth);
@@ -33,9 +32,14 @@ app.post("/user/create", userController.createUserAPI);
 app.post("/guru", userController.findAllTeachersAPI);
 app.post("/siswa", userController.findAllStundetsAPI);
 app.delete("/user/delete", userController.deleteUserAPI);
+app.get("/dropdown-guru", userController.findAllTeachersDropdownAPI);
 
 // Mapel Routes
 app.get("/mapel", mapelController.getAllMapelAPI);
+app.post("/add-pengajar", mapelController.createPengajarAPI);
+app.put("/edit-pengajar", mapelController.updatePengajarAPI);
+app.delete("/delete-pengajar", mapelController.deletePengajarAPI);
+app.post("/get-all-pengajar", mapelController.getAllPengajarAPI);
 
 // Kelas Routes
 app.get("/kelas", kelasController.getAllKelasAPI);

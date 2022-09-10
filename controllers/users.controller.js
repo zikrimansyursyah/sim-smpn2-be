@@ -122,3 +122,13 @@ exports.deleteUserAPI = async (req, res) => {
     message: message ? message : responseMessage[httpCode],
   });
 };
+
+exports.findAllTeachersDropdownAPI = async (req, res) => {
+  const { httpCode, message, data } = await userService.findAllTeachersDropdown();
+
+  return res.status(httpCode).json({
+    httpCode,
+    message: message ? message : responseMessage[httpCode],
+    data,
+  });
+};

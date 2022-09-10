@@ -38,5 +38,6 @@ db.users_type = require("./users_type.js")(sequelize, Sequelize);
 db.kelas = require("./kelas.js")(sequelize, Sequelize);
 db.mapel = require("./mapel.js")(sequelize, Sequelize);
 db.kelas_type = require("./kelas_type.js")(sequelize, Sequelize);
+db.pengajar = require("./pengajar.js")(sequelize, Sequelize);
 
 module.exports = db;

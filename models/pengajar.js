@@ -2,8 +2,7 @@
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class pengajar extends Model {
-    static associate(models) {
-    }
+    static associate(models) {}
   }
   pengajar.init(
     {
@@ -25,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "pengajar",
+      freezeTableName: true,
     }
   );
   return pengajar;

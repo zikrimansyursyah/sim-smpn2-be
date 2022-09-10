@@ -312,3 +312,30 @@ exports.deleteUser = async (req) => {
     };
   }
 };
+
+exports.findAllTeachersDropdown = async () => {
+  try {
+    const teacher = await userRepository.findAllTeacherDropdown();
+    if (!teacher) {
+      return {
+        httpCode: httpCode.notFound,
+        message: responseMessage.userNotFound,
+      };
+    }
+
+    let result = [];
+    (teacher || []).map((item) => {
+      result.push({ id: item.id, nama: item.nama_lengkap });
+    });
+
+    return {
+      httpCode: httpCode.ok,
+      data: result,
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      httpCode: httpCode.internalServerError,
+    };
+  }
+};

@@ -36,6 +36,7 @@ app.get("/dropdown-guru", userController.findAllTeachersDropdownAPI);
 
 // Mapel Routes
 app.get("/mapel", mapelController.getAllMapelAPI);
+app.post("/add-mapel", mapelController.createMapelAPI);
 app.post("/add-pengajar", mapelController.createPengajarAPI);
 app.put("/edit-pengajar", mapelController.updatePengajarAPI);
 app.delete("/delete-pengajar", mapelController.deletePengajarAPI);

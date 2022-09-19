@@ -155,3 +155,39 @@ exports.deletePengajar = async (req) => {
     };
   }
 };
+
+exports.createMapel = async (req) => {
+  const { userLogged } = req;
+  try {
+    let field = {
+      nama: req.fields.nama,
+      kelas: req.fields.kelas,
+      createdAt: new Date(),
+      updateAt: new Date(),
+      createdBy: userLogged.id,
+      updatedBy: userLogged.id,
+    };
+
+    const existData = await mapelRepository.findOneMapel(req.fields.nama);
+    if (existData) {
+      return {
+        httpCode: httpCode.forbidden,
+        message: "data tersebut sudah ada",
+      };
+      4;
+    }
+
+    await mapelRepository.restartIncrement();
+
+    await mapelRepository.addMapel(field);
+
+    return {
+      httpCode: httpCode.ok,
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      httpCode: httpCode.internalServerError,
+    };
+  }
+};

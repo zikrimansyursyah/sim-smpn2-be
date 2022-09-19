@@ -47,3 +47,12 @@ exports.deletePengajarAPI = async (req, res) => {
     message: responseMessage[httpCode],
   });
 };
+
+exports.createMapelAPI = async (req, res) => {
+  const { httpCode, message } = await mapelService.createMapel(req);
+
+  return res.status(httpCode).json({
+    httpCode,
+    message: message ? message : responseMessage[httpCode],
+  });
+};

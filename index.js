@@ -33,6 +33,7 @@ app.post("/guru", userController.findAllTeachersAPI);
 app.post("/siswa", userController.findAllStundetsAPI);
 app.delete("/user/delete", userController.deleteUserAPI);
 app.get("/dropdown-guru", userController.findAllTeachersDropdownAPI);
+app.post("/dropdown-siswa", userController.findAllStudentDropdownAPI);
 
 // Mapel Routes
 app.get("/mapel", mapelController.getAllMapelAPI);

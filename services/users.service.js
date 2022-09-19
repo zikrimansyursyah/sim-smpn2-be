@@ -339,3 +339,30 @@ exports.findAllTeachersDropdown = async () => {
     };
   }
 };
+
+exports.findAllStudentDropdown = async (req) => {
+  try {
+    const student = await userRepository.findAllStudentDropdown(req.fields.id_kelas);
+    if (!student) {
+      return {
+        httpCode: httpCode.notFound,
+        message: responseMessage.userNotFound,
+      };
+    }
+
+    let result = [];
+    (student || []).map((item) => {
+      result.push({ value: item.id, name: item.nama_lengkap });
+    });
+
+    return {
+      httpCode: httpCode.ok,
+      data: result,
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      httpCode: httpCode.internalServerError,
+    };
+  }
+};

@@ -132,3 +132,13 @@ exports.findAllTeachersDropdownAPI = async (req, res) => {
     data,
   });
 };
+
+exports.findAllStudentDropdownAPI = async (req, res) => {
+  const { httpCode, message, data } = await userService.findAllStudentDropdown(req);
+
+  return res.status(httpCode).json({
+    httpCode,
+    message: message ? message : responseMessage[httpCode],
+    data,
+  });
+};

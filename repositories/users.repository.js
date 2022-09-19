@@ -127,3 +127,7 @@ exports.getDashboardData = async () => {
 exports.findAllTeacherDropdown = async () => {
   return await User.findAll({ where: { type: 3, is_active: true, is_delete: false } });
 };
+
+exports.findAllStudentDropdown = async (id_kelas) => {
+  return await User.findAll({ where: { id_kelas } });
+};

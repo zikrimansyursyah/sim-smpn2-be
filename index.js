@@ -10,6 +10,7 @@ const PORT = process.env.PORT || 5000;
 const userController = require("./controllers/users.controller.js");
 const mapelController = require("./controllers/mapel.controller.js");
 const kelasController = require("./controllers/kelas.controller.js");
+const nilaiController = require("./controllers/nilai.controller.js");
 const { Validate } = require("./middleware");
 
 app.use(cors());
@@ -45,6 +46,9 @@ app.post("/get-all-pengajar", mapelController.getAllPengajarAPI);
 
 // Kelas Routes
 app.get("/kelas", kelasController.getAllKelasAPI);
+
+// Nilai Routes
+app.post("/nilai/khs", nilaiController.findUserKHSAPI);
 
 app.listen(PORT, () => {
   console.info(`Server running at http://localhost:${PORT}`);

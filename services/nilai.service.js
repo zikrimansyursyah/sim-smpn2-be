@@ -8,10 +8,12 @@ exports.findUserKHS = async (req) => {
         const {nilai, mapel} = await nilaiRepository.findUserKHS(id_kelas, is_siswa ? userLogged.id : id_siswa, semester, kelas);
 
         let dataKHS = [];
+        console.log(mapel)
 
         if (!nilai.length) {
             (mapel || []).map((item) => {
                 dataKHS.push({
+                    id_mapel: item.id,
                     nama_mapel: item.nama,
                     nama_kelas: item.nama_kelas,
                     semester: semester,
@@ -34,6 +36,7 @@ exports.findUserKHS = async (req) => {
             nilai.map((nil_item) => {
                 if (nil_item.id_mapel === item.id) {
                     _dataTemp = {
+                        id_mapel: nil_item.id_mapel,
                         nama_mapel: nil_item.nama_mapel,
                         nama_kelas: nil_item.nama_kelas,
                         semester: semester,
@@ -47,6 +50,7 @@ exports.findUserKHS = async (req) => {
 
             if (_dataTemp === null) {
                 dataKHS.push({
+                    id_mapel: item.id,
                     nama_mapel: item.nama,
                     nama_kelas: item.nama_kelas,
                     semester: semester,

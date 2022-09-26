@@ -11,7 +11,7 @@ const userController = require("./controllers/users.controller.js");
 const mapelController = require("./controllers/mapel.controller.js");
 const kelasController = require("./controllers/kelas.controller.js");
 const nilaiController = require("./controllers/nilai.controller.js");
-const { Validate } = require("./middleware");
+const { Validate, Authorize } = require("./middleware");
 
 app.use(cors());
 app.use(cookieParser());
@@ -49,6 +49,7 @@ app.get("/kelas", kelasController.getAllKelasAPI);
 
 // Nilai Routes
 app.post("/nilai/khs", nilaiController.findUserKHSAPI);
+app.post("/nilai/update-khs", Authorize, nilaiController.updateNilaiKHSAPI);
 
 app.listen(PORT, () => {
   console.info(`Server running at http://localhost:${PORT}`);

@@ -10,3 +10,12 @@ exports.findUserKHSAPI = async (req, res) => {
     data: data,
   });
 };
+
+exports.updateNilaiKHSAPI = async (req, res) => {
+  const { httpCode } = await nilaiService.updateNilaiKHS(req);
+
+  return res.status(httpCode).json({
+    httpCode,
+    message: responseMessage[httpCode],
+  });
+};

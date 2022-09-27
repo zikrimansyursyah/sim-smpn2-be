@@ -129,3 +129,93 @@ exports.updateNilaiKHS = async (req) => {
     };
   }
 };
+
+exports.findDropdownMapelKHSGuru = async (req) => {
+  const { id_pengajar } = req.fields;
+  try {
+    const result = await nilaiRepository.findDropdownMapelKHSGuru(id_pengajar);
+
+    return {
+      httpCode: httpCode.ok,
+      data: result,
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      httpCode: httpCode.internalServerError,
+    };
+  }
+};
+
+exports.findGuruKHS = async (req) => {
+  const { id_kelas, id_mapel, semester } = req.fields;
+  try {
+    const { nilai, siswa } = await nilaiRepository.findKHSGuru(id_kelas, id_mapel, semester);
+
+    let dataKHS = [];
+
+    if (!nilai.length) {
+      (siswa || []).map((item) => {
+        dataKHS.push({
+          id_siswa: item.id,
+          nama_siswa: item.nama_lengkap,
+          nama_kelas: item.nama_kelas,
+          semester: semester,
+          nil_kehadiran: 0,
+          nil_tugas: 0,
+          nil_uts: 0,
+          nil_uas: 0,
+        });
+      });
+
+      return {
+        httpCode: httpCode.ok,
+        data: dataKHS,
+      };
+    }
+
+    (siswa || []).map((item) => {
+      let _dataTemp = null;
+
+      nilai.map((nil_item) => {
+        if (nil_item.id_siswa === item.id) {
+          _dataTemp = {
+            id_siswa: nil_item.id_siswa,
+            nama_siswa: item.nama_lengkap,
+            nama_kelas: nil_item.nama_kelas,
+            semester: semester,
+            nil_kehadiran: nil_item.nil_kehadiran,
+            nil_tugas: nil_item.nil_tugas,
+            nil_uts: nil_item.nil_uts,
+            nil_uas: nil_item.nil_uas,
+          };
+        }
+      });
+
+      if (_dataTemp === null) {
+        dataKHS.push({
+          id_siswa: item.id,
+          nama_siswa: item.nama_lengkap,
+          nama_kelas: item.nama_kelas,
+          semester: semester,
+          nil_kehadiran: 0,
+          nil_tugas: 0,
+          nil_uts: 0,
+          nil_uas: 0,
+        });
+      } else {
+        dataKHS.push(_dataTemp);
+      }
+    });
+
+    return {
+      httpCode: httpCode.ok,
+      data: dataKHS,
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      httpCode: httpCode.internalServerError,
+    };
+  }
+};

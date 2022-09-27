@@ -50,6 +50,8 @@ app.get("/kelas", kelasController.getAllKelasAPI);
 // Nilai Routes
 app.post("/nilai/khs", nilaiController.findUserKHSAPI);
 app.post("/nilai/update-khs", Authorize, nilaiController.updateNilaiKHSAPI);
+app.post("/nilai/dropdown-mapel-guru", nilaiController.findDropdownMapelKHSGuruAPI);
+app.post("/nilai/khs-guru", nilaiController.findGuruKHSAPI);
 
 app.listen(PORT, () => {
   console.info(`Server running at http://localhost:${PORT}`);

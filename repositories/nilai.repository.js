@@ -2,6 +2,7 @@ const db = require("../models/index.js");
 const Nilai = db.nilai;
 const Mapel = db.mapel;
 const Pengajar = db.pengajar;
+const Kelas = db.kelas;
 const User = db.users;
 const { Op, QueryTypes, literal } = require("sequelize");
 const { sequelize } = require("../models/index.js");
@@ -132,4 +133,39 @@ exports.findKHSGuru = async (id_kelas, id_mapel, semester) => {
   });
 
   return { nilai, siswa };
+};
+
+exports.findKHSSiswa = async (id_siswa, type, semester) => {
+  const nilai = await Nilai.findAll({
+    where: { id_siswa, semester },
+    include: [
+      {
+        model: Kelas,
+        where: { type },
+      },
+    ],
+    attributes: {
+      exclude: ["createdAt", "updatedAt", "createdBy", "updatedBy"],
+    },
+    raw: true,
+  });
+
+  const mapel = await Mapel.findAll({
+    where: { kelas: type },
+    attributes: {
+      include: [
+        [
+          sequelize.literal(`(
+                        SELECT kelas.nama
+                        FROM kelas as kelas
+                        WHERE kelas.id = ${id_kelas}
+                    )`),
+          "nama_kelas",
+        ],
+      ],
+    },
+    raw: true,
+  });
+
+  return { nilai, mapel };
 };

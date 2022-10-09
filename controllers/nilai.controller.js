@@ -7,7 +7,7 @@ exports.findUserKHSAPI = async (req, res) => {
   return res.status(httpCode).json({
     httpCode,
     message: responseMessage[httpCode],
-    data: data,
+    data: data ? data : [],
   });
 };
 
@@ -17,7 +17,17 @@ exports.findGuruKHSAPI = async (req, res) => {
   return res.status(httpCode).json({
     httpCode,
     message: responseMessage[httpCode],
-    data: data,
+    data: data ? data : [],
+  });
+};
+
+exports.findSiswaKHSAPI = async (req, res) => {
+  const { httpCode, data } = await nilaiService.findSiswaKHS(req);
+
+  return res.status(httpCode).json({
+    httpCode,
+    message: responseMessage[httpCode],
+    data: data ? data : [],
   });
 };
 
@@ -32,6 +42,16 @@ exports.updateNilaiKHSAPI = async (req, res) => {
 
 exports.findDropdownMapelKHSGuruAPI = async (req, res) => {
   const { httpCode, data } = await nilaiService.findDropdownMapelKHSGuru(req);
+
+  return res.status(httpCode).json({
+    httpCode,
+    message: responseMessage[httpCode],
+    data: data ? data : null,
+  });
+};
+
+exports.findRangkumanNilaiAPI = async (req, res) => {
+  const { httpCode, data } = await nilaiService.findRangkumanNilai(req);
 
   return res.status(httpCode).json({
     httpCode,

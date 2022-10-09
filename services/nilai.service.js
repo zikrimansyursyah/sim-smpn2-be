@@ -223,7 +223,7 @@ exports.findGuruKHS = async (req) => {
 exports.findSiswaKHS = async (req) => {
   const { id_siswa, kelas, semester } = req.fields;
   try {
-    const nilai = await nilaiRepository.findKHSSiswa(id_siswa, kelas, semester);
+    const { nilai, mapel, namaKelas } = await nilaiRepository.findKHSSiswa(id_siswa, kelas, semester);
 
     let dataKHS = [];
 
@@ -232,7 +232,7 @@ exports.findSiswaKHS = async (req) => {
         dataKHS.push({
           id_mapel: item.id,
           nama_mapel: item.nama,
-          nama_kelas: item.nama_kelas,
+          nama_kelas: namaKelas.nama,
           semester: semester,
           nil_kehadiran: 0,
           nil_tugas: 0,
@@ -255,7 +255,7 @@ exports.findSiswaKHS = async (req) => {
           _dataTemp = {
             id_mapel: nil_item.id_mapel,
             nama_mapel: nil_item.nama_mapel,
-            nama_kelas: nil_item.nama_kelas,
+            nama_kelas: namaKelas.nama,
             semester: semester,
             nil_kehadiran: nil_item.nil_kehadiran,
             nil_tugas: nil_item.nil_tugas,
@@ -269,7 +269,7 @@ exports.findSiswaKHS = async (req) => {
         dataKHS.push({
           id_mapel: item.id,
           nama_mapel: item.nama,
-          nama_kelas: item.nama_kelas,
+          nama_kelas: namaKelas.nama,
           semester: semester,
           nil_kehadiran: 0,
           nil_tugas: 0,
@@ -284,6 +284,24 @@ exports.findSiswaKHS = async (req) => {
     return {
       httpCode: httpCode.ok,
       data: dataKHS,
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      httpCode: httpCode.internalServerError,
+    };
+  }
+};
+
+exports.findRangkumanNilai = async (req) => {
+  const { id_siswa } = req.fields;
+
+  try {
+    const rangNilai = await nilaiRepository.findRangkumanNilai(id_siswa);
+
+    return {
+      httpCode: httpCode.ok,
+      data: rangNilai,
     };
   } catch (error) {
     console.error(error);

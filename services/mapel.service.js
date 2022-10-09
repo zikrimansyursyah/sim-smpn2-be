@@ -48,6 +48,7 @@ exports.createPengajar = async (req) => {
       };
     }
 
+    field.total_pertemuan = Number(req.fields.total_pertemuan);
     field.createdAt = new Date();
     field.updateAt = new Date();
     field.createdBy = userLogged.id;
@@ -89,7 +90,7 @@ exports.getAllPengajar = async (req) => {
 
 exports.updatePengajar = async (req) => {
   const { userLogged } = req;
-  const { id, mapel, kelas, guru } = req.fields;
+  const { id, mapel, kelas, guru, total_pertemuan } = req.fields;
   try {
     const pengajar = await mapelRepository.findById(id);
     if (!pengajar) {
@@ -105,7 +106,7 @@ exports.updatePengajar = async (req) => {
       id_kelas: Number(kelas),
     };
 
-    const existData = await mapelRepository.checkPengajarExist(field);
+    const existData = await mapelRepository.checkPengajarExist(field, id);
     if (existData) {
       return {
         httpCode: httpCode.forbidden,
@@ -113,13 +114,15 @@ exports.updatePengajar = async (req) => {
       };
     }
 
-    const havePengajar = await mapelRepository.checkHavePengajar({ id_mapel: field.id_mapel, id_kelas: field.id_kelas });
+    const havePengajar = await mapelRepository.checkHavePengajar({ id_mapel: field.id_mapel, id_kelas: field.id_kelas }, id);
     if (havePengajar) {
       return {
         httpCode: httpCode.forbidden,
         message: "data tersebut sudah ada",
       };
     }
+
+    field.total_pertemuan = Number(total_pertemuan);
 
     await mapelRepository.editPengajar(id, userLogged.id, field);
 

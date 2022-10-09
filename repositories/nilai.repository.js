@@ -4,6 +4,7 @@ const Mapel = db.mapel;
 const Pengajar = db.pengajar;
 const Kelas = db.kelas;
 const User = db.users;
+const KelasType = db.kelas_type;
 const { Op, QueryTypes, literal } = require("sequelize");
 const { sequelize } = require("../models/index.js");
 
@@ -136,36 +137,51 @@ exports.findKHSGuru = async (id_kelas, id_mapel, semester) => {
 };
 
 exports.findKHSSiswa = async (id_siswa, type, semester) => {
-  const nilai = await Nilai.findAll({
-    where: { id_siswa, semester },
-    include: [
-      {
-        model: Kelas,
-        where: { type },
+  const nilai = await sequelize.query(
+    `
+  SELECT a.*, c.nama AS nama_mapel
+  FROM nilai a
+  JOIN kelas b ON b.id = a.id_kelas 
+  JOIN mapel c ON c.id = a.id_mapel 
+  WHERE b.type = :type AND a.id_siswa = :id_siswa AND a.semester = :semester
+  `,
+    {
+      type: QueryTypes.SELECT,
+      replacements: {
+        type,
+        id_siswa,
+        semester,
       },
-    ],
+    }
+  );
+
+  const mapel = await Mapel.findAll({
+    where: { kelas: type },
     attributes: {
       exclude: ["createdAt", "updatedAt", "createdBy", "updatedBy"],
     },
     raw: true,
   });
 
-  const mapel = await Mapel.findAll({
-    where: { kelas: type },
-    attributes: {
-      include: [
-        [
-          sequelize.literal(`(
-                        SELECT kelas.nama
-                        FROM kelas as kelas
-                        WHERE kelas.id = ${id_kelas}
-                    )`),
-          "nama_kelas",
-        ],
-      ],
-    },
-    raw: true,
-  });
+  const namaKelas = await KelasType.findByPk(type);
 
-  return { nilai, mapel };
+  return { nilai, mapel, namaKelas };
+};
+
+exports.findRangkumanNilai = async (id_siswa) => {
+  const nilai = sequelize.query(
+    `
+    SELECT a.id, c.nama AS nama_mapel, b.nama AS nama_kelas, a.semester, ((a.nil_kehadiran + a.nil_tugas + a.nil_uts + a.nil_uas) / 4) AS total_nilai
+    FROM nilai a
+    JOIN kelas b ON b.id = a.id_kelas 
+    JOIN mapel c ON c.id = a.id_mapel 
+    WHERE a.id_siswa = :id_siswa
+  `,
+    {
+      type: QueryTypes.SELECT,
+      replacements: { id_siswa },
+    }
+  );
+
+  return nilai;
 };

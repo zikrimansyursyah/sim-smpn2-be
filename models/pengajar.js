@@ -15,6 +15,9 @@ module.exports = (sequelize, DataTypes) => {
       id_mapel: {
         type: DataTypes.INTEGER,
       },
+      total_pertemuan: {
+        type: DataTypes.INTEGER,
+      },
       createdBy: {
         type: DataTypes.INTEGER,
         allowNull: false,

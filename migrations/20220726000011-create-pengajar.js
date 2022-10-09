@@ -17,6 +17,9 @@ module.exports = {
       id_mapel: {
         type: Sequelize.INTEGER,
       },
+      total_pertemuan: {
+        type: Sequelize.INTEGER,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

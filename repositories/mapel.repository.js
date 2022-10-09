@@ -61,12 +61,34 @@ exports.createPengajar = async (field) => {
   return await Pengajar.create(field);
 };
 
-exports.checkPengajarExist = async (data) => {
-  return await Pengajar.findOne({ where: data });
+exports.checkPengajarExist = async (data, id) => {
+  let where = { where: data };
+  if (id) {
+    where = {
+      where: {
+        ...data,
+        id: {
+          [Op.not]: id,
+        },
+      },
+    };
+  }
+  return await Pengajar.findOne(where);
 };
 
-exports.checkHavePengajar = async (data) => {
-  return await Pengajar.findOne({ where: data });
+exports.checkHavePengajar = async (data, id) => {
+  let where = { where: data };
+  if (id) {
+    where = {
+      where: {
+        ...data,
+        id: {
+          [Op.not]: id,
+        },
+      },
+    };
+  }
+  return await Pengajar.findOne(where);
 };
 
 exports.editPengajar = async (id, updatedBy, param) => {

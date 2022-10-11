@@ -171,7 +171,8 @@ exports.findKHSSiswa = async (id_siswa, type, semester) => {
 exports.findRangkumanNilai = async (id_siswa) => {
   const nilai = sequelize.query(
     `
-    SELECT a.id, c.nama AS nama_mapel, b.nama AS nama_kelas, a.semester, ((a.nil_kehadiran + a.nil_tugas + a.nil_uts + a.nil_uas) / 4) AS total_nilai
+    SELECT a.id, c.nama AS nama_mapel, b.nama AS nama_kelas, a.semester, 
+    ((a.nil_kehadiran + a.nil_tugas + a.nil_uts + a.nil_uas) / 4) AS total_nilai
     FROM nilai a
     JOIN kelas b ON b.id = a.id_kelas 
     JOIN mapel c ON c.id = a.id_mapel 
@@ -184,4 +185,45 @@ exports.findRangkumanNilai = async (id_siswa) => {
   );
 
   return nilai;
+};
+
+exports.findRekapAbsensi = async (id_kelas, id_mapel, semester) => {
+  const nilai = await sequelize.query(
+    `
+  SELECT a.id, u.nama_lengkap, u.nisn, a.nil_kehadiran, u.id AS id_siswa,
+  (SELECT p.total_pertemuan FROM pengajar p WHERE p.id_kelas = :id_kelas AND p.id_mapel = :id_mapel ) AS total_pertemuan
+  FROM nilai a
+  JOIN kelas b ON b.id = a.id_kelas 
+  JOIN users u ON u.id = a.id_siswa 
+  WHERE a.semester = :semester AND b.id = :id_kelas
+  `,
+    {
+      type: QueryTypes.SELECT,
+      replacements: { id_kelas, id_mapel, semester },
+    }
+  );
+
+  const siswa = await User.findAll({
+    where: { id_kelas },
+    attributes: [
+      "id",
+      "nama_lengkap",
+      "nisn",
+      [
+        sequelize.literal(`(
+          SELECT p.total_pertemuan 
+          FROM pengajar p 
+          WHERE p.id_kelas = ${id_kelas} AND p.id_mapel = ${id_mapel}
+        )`),
+        "total_pertemuan",
+      ],
+    ],
+    raw: true,
+  });
+
+  return { nilai, siswa };
+};
+
+exports.updateAbsensi = async (where, param) => {
+  await Nilai.update(param, { where });
 };

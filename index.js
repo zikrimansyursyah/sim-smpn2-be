@@ -54,6 +54,8 @@ app.post("/nilai/dropdown-mapel-guru", nilaiController.findDropdownMapelKHSGuruA
 app.post("/nilai/khs-guru", nilaiController.findGuruKHSAPI);
 app.post("/nilai/khs-siswa", nilaiController.findSiswaKHSAPI);
 app.post("/nilai/rangkuman-nilai", nilaiController.findRangkumanNilaiAPI);
+app.post("/nilai/get-rekap-absensi", nilaiController.findRekapAbsensiAPI);
+app.post("/nilai/update-rekap-absensi", nilaiController.updateAbsensiSiswaAPI);
 
 app.listen(PORT, () => {
   console.info(`Server running at http://localhost:${PORT}`);

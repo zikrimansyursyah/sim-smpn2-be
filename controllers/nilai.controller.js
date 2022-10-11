@@ -59,3 +59,22 @@ exports.findRangkumanNilaiAPI = async (req, res) => {
     data: data ? data : null,
   });
 };
+
+exports.findRekapAbsensiAPI = async (req, res) => {
+  const { httpCode, data } = await nilaiService.findRekapAbsensi(req);
+
+  return res.status(httpCode).json({
+    httpCode,
+    message: responseMessage[httpCode],
+    data: data ? data : [],
+  });
+};
+
+exports.updateAbsensiSiswaAPI = async (req, res) => {
+  const { httpCode } = await nilaiService.updateAbsensiSiswa(req);
+
+  return res.status(httpCode).json({
+    httpCode,
+    message: responseMessage[httpCode],
+  });
+};

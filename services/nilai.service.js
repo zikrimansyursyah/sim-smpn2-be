@@ -77,14 +77,13 @@ exports.findUserKHS = async (req) => {
 
 exports.updateNilaiKHS = async (req) => {
   const { userLogged } = req;
-  const { id_kelas, id_siswa, id_mapel, semester, nil_kehadiran, nil_tugas, nil_uts, nil_uas } = req.fields;
+  const { id_kelas, id_siswa, id_mapel, semester, nil_tugas, nil_uts, nil_uas } = req.fields;
   try {
     // cari jika data sudah ada
     const checkNilaiExist = await nilaiRepository.findNilaiMapelKHS(id_kelas, id_siswa, semester, id_mapel);
 
     if (checkNilaiExist) {
       let paramUpdate = {
-        nil_kehadiran,
         nil_tugas,
         nil_uts,
         nil_uas,
@@ -106,7 +105,6 @@ exports.updateNilaiKHS = async (req) => {
         id_mapel,
         id_siswa,
         semester,
-        nil_kehadiran,
         nil_tugas,
         nil_uts,
         nil_uas,
@@ -302,6 +300,123 @@ exports.findRangkumanNilai = async (req) => {
     return {
       httpCode: httpCode.ok,
       data: rangNilai,
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      httpCode: httpCode.internalServerError,
+    };
+  }
+};
+
+exports.findRekapAbsensi = async (req) => {
+  const { id_kelas, id_mapel, semester } = req.fields;
+
+  try {
+    const { nilai, siswa } = await nilaiRepository.findRekapAbsensi(id_kelas, id_mapel, semester);
+
+    let rekapAbsensi = [];
+
+    if (!nilai.length) {
+      (siswa || []).map((item) => {
+        rekapAbsensi.push({
+          id: item.id,
+          nama_siswa: item.nama_lengkap,
+          nisn: item.nisn,
+          total_absen: 0,
+          total_pertemuan: item.total_pertemuan,
+        });
+      });
+
+      return {
+        httpCode: httpCode.ok,
+        data: rekapAbsensi,
+      };
+    }
+
+    (siswa || []).map((item) => {
+      let dataTemp = null;
+
+      (nilai || []).map((nil_item) => {
+        if (nil_item.id_siswa === item.id) {
+          dataTemp = {
+            id: nil_item.id_siswa,
+            nama_siswa: nil_item.nama_lengkap,
+            nisn: nil_item.nisn,
+            total_absen: nil_item.nil_kehadiran,
+            total_pertemuan: nil_item.total_pertemuan,
+          };
+        }
+      });
+
+      if (!dataTemp) {
+        rekapAbsensi.push({
+          id: item.id,
+          nama_siswa: item.nama_lengkap,
+          nisn: item.nisn,
+          total_absen: 0,
+          total_pertemuan: item.total_pertemuan,
+        });
+      } else {
+        rekapAbsensi.push(dataTemp);
+      }
+    });
+
+    return {
+      httpCode: httpCode.ok,
+      data: rekapAbsensi,
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      httpCode: httpCode.internalServerError,
+    };
+  }
+};
+
+exports.updateAbsensiSiswa = async (req) => {
+  const { userLogged } = req;
+  const { id_kelas, id_mapel, id_siswa, semester, nil_kehadiran } = req.fields;
+
+  try {
+    const checkNilaiExist = await nilaiRepository.findNilaiMapelKHS(id_kelas, id_siswa, semester, id_mapel);
+
+    if (checkNilaiExist) {
+      let param = {
+        nil_kehadiran,
+        updatedAt: new Date(),
+        updatedBy: userLogged.id,
+      };
+
+      let whereClause = {
+        id_kelas,
+        id_mapel,
+        id_siswa,
+        semester,
+      };
+
+      await nilaiRepository.updateAbsensi(whereClause, param);
+    } else {
+      let field = {
+        id_kelas,
+        id_mapel,
+        id_siswa,
+        semester,
+        nil_kehadiran,
+        nil_tugas: 0,
+        nil_uts: 0,
+        nil_uas: 0,
+        createdAt: new Date(),
+        createdBy: userLogged.id,
+        updatedAt: new Date(),
+        updatedBy: userLogged.id,
+      };
+
+      await nilaiRepository.createNilaiKHS(field);
+    }
+
+    return {
+      httpCode: httpCode.ok,
     };
   } catch (error) {
     console.error(error);

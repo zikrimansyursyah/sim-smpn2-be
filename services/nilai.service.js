@@ -383,7 +383,7 @@ exports.updateAbsensiSiswa = async (req) => {
 
     if (checkNilaiExist) {
       let param = {
-        nil_kehadiran,
+        nil_kehadiran: Math.round(nil_kehadiran),
         updatedAt: new Date(),
         updatedBy: userLogged.id,
       };
@@ -402,7 +402,7 @@ exports.updateAbsensiSiswa = async (req) => {
         id_mapel,
         id_siswa,
         semester,
-        nil_kehadiran,
+        nil_kehadiran: Math.round(nil_kehadiran),
         nil_tugas: 0,
         nil_uts: 0,
         nil_uas: 0,

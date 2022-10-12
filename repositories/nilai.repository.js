@@ -195,7 +195,7 @@ exports.findRekapAbsensi = async (id_kelas, id_mapel, semester) => {
   FROM nilai a
   JOIN kelas b ON b.id = a.id_kelas 
   JOIN users u ON u.id = a.id_siswa 
-  WHERE a.semester = :semester AND b.id = :id_kelas
+  WHERE a.semester = :semester AND b.id = :id_kelas AND a.id_mapel = :id_mapel
   `,
     {
       type: QueryTypes.SELECT,

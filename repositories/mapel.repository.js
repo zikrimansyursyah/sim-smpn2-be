@@ -103,8 +103,8 @@ exports.deletePengajar = async (pengajar) => {
   return await pengajar.destroy();
 };
 
-exports.findOneMapel = async (nama) => {
-  return await Mapel.findOne({ where: { nama } });
+exports.findOneMapel = async (nama, kelas) => {
+  return await Mapel.findOne({ where: { nama, kelas } });
 };
 
 exports.addMapel = async (field) => {

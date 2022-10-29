@@ -171,7 +171,7 @@ exports.createMapel = async (req) => {
       updatedBy: userLogged.id,
     };
 
-    const existData = await mapelRepository.findOneMapel(req.fields.nama);
+    const existData = await mapelRepository.findOneMapel(req.fields.nama, req.fields.kelas);
     if (existData) {
       return {
         httpCode: httpCode.forbidden,

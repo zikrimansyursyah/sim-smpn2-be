@@ -172,7 +172,7 @@ exports.findRangkumanNilai = async (id_siswa) => {
   const nilai = sequelize.query(
     `
     SELECT a.id, c.nama AS nama_mapel, b.nama AS nama_kelas, a.semester, 
-    ((a.nil_kehadiran + a.nil_tugas + a.nil_uts + a.nil_uas) / 4) AS total_nilai
+    CAST(ROUND(((a.nil_kehadiran + a.nil_tugas + a.nil_uts + a.nil_uas) / 4) ,0) as int) AS total_nilai
     FROM nilai a
     JOIN kelas b ON b.id = a.id_kelas 
     JOIN mapel c ON c.id = a.id_mapel 

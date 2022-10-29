@@ -298,11 +298,12 @@ exports.findRangkumanNilai = async (req) => {
     const rangNilai = await nilaiRepository.findRangkumanNilai(id_siswa);
     
     let datas = []
-    for (const e in rangNilai) {
-      const total_nilai = Math.round((e.nil_kehadiran + e.nil_tugas + e.nil_uts + e.nil_uas) / 4)
-      let temp = { ...e, total_nilai };
-      datas.push(temp)
-    }
+      
+    rangNilai.map((e) => {
+          const total_nilai = Math.round((e.nil_kehadiran + e.nil_tugas + e.nil_uts + e.nil_uas) / 4)
+          let temp = { ...e, total_nilai };
+          datas.push(temp)
+    })
 
     return {
       httpCode: httpCode.ok,

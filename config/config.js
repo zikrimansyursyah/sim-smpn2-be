@@ -24,11 +24,5 @@ module.exports = {
     database: DB_NAME_PROD,
     host: DB_HOST_PROD,
     dialect: "mysql",
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false,
-      },
-    },
   },
 };

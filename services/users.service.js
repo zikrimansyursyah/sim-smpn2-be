@@ -68,6 +68,7 @@ exports.login = async (req) => {
     console.error(error);
     return {
       httpCode: httpCode.internalServerError,
+      message: error,
     };
   }
 };

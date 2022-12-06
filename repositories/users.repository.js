@@ -28,7 +28,7 @@ exports.findAllTeachers = async (limit, offset, filter) => {
     where: {
       type: 3,
       is_delete: false,
-      [Op.or]: [{ nuptk: { [Op.iLike]: "%" + filter + "%" } }, { no_induk_sekolah: { [Op.iLike]: "%" + filter + "%" } }, { nama_lengkap: { [Op.iLike]: "%" + filter + "%" } }],
+      [Op.or]: [{ nuptk: { [Op.like]: "%" + filter + "%" } }, { no_induk_sekolah: { [Op.like]: "%" + filter + "%" } }, { nama_lengkap: { [Op.like]: "%" + filter + "%" } }],
     },
     offset,
     limit,
@@ -54,7 +54,7 @@ exports.findAllStudent = async (limit, offset, filter, id_kelas) => {
   const where = {
     type: 4,
     is_delete: false,
-    [Op.or]: [{ nisn: { [Op.iLike]: "%" + filter + "%" } }, { no_induk_sekolah: { [Op.iLike]: "%" + filter + "%" } }, { nama_lengkap: { [Op.iLike]: "%" + filter + "%" } }],
+    [Op.or]: [{ nisn: { [Op.like]: "%" + filter + "%" } }, { no_induk_sekolah: { [Op.like]: "%" + filter + "%" } }, { nama_lengkap: { [Op.like]: "%" + filter + "%" } }],
   };
 
   if (id_kelas && id_kelas !== "") {

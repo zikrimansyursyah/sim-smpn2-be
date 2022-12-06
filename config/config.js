@@ -8,7 +8,7 @@ module.exports = {
     password: DB_PASSWORD,
     database: DB_NAME_DEV,
     host: DB_HOST_DEV,
-    dialect: "postgres",
+    dialect: "mysql",
   },
 
   test: {
@@ -16,14 +16,14 @@ module.exports = {
     password: DB_PASSWORD,
     database: DB_NAME_TEST,
     host: DB_HOST_TEST,
-    dialect: "postgres",
+    dialect: "mysql",
   },
   production: {
     username: DB_USER_PROD,
     password: DB_PASSWORD_PROD,
     database: DB_NAME_PROD,
     host: DB_HOST_PROD,
-    dialect: "postgresql",
+    dialect: "mysql",
     dialectOptions: {
       ssl: {
         require: true,

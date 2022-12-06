@@ -39,7 +39,7 @@ exports.findAllTeachers = async (limit, offset, filter) => {
           sequelize.literal(`(
             SELECT a.nama
             FROM mapel a
-            WHERE a.id = "users"."id_mata_pelajaran"
+            WHERE a.id = users.id_mata_pelajaran
           )`),
           "mata_pelajaran",
         ],
@@ -72,7 +72,7 @@ exports.findAllStudent = async (limit, offset, filter, id_kelas) => {
           sequelize.literal(`(
             SELECT a.nama
             FROM kelas a
-            WHERE a.id = "users"."id_kelas"
+            WHERE a.id = users.id_kelas
           )`),
           "kelas",
         ],
@@ -94,9 +94,9 @@ exports.deleteUser = async (id) => {
 exports.getDashboardData = async () => {
   const siswa = await sequelize.query(
     `
-  SELECT COUNT(*) AS total, MIN(a."createdAt") AS sejak, MAX(a."updatedAt") AS last_updated
+  SELECT COUNT(*) AS total, MIN(a.createdAt) AS sejak, MAX(a.updatedAt) AS last_updated
   FROM users a
-  WHERE a."type" = 4
+  WHERE a.type = 4
   LIMIT 1
   `,
     { type: QueryTypes.SELECT }
@@ -104,9 +104,9 @@ exports.getDashboardData = async () => {
 
   const guru = await sequelize.query(
     `
-  SELECT COUNT(*) AS total, MIN(a."createdAt") AS sejak, MAX(a."updatedAt") AS last_updated
+  SELECT COUNT(*) AS total, MIN(a.createdAt) AS sejak, MAX(a.updatedAt) AS last_updated
   FROM users a
-  WHERE a."type" = 3
+  WHERE a.type = 3
   LIMIT 1
   `,
     { type: QueryTypes.SELECT }
@@ -114,7 +114,7 @@ exports.getDashboardData = async () => {
 
   const mapel = await sequelize.query(
     `
-  SELECT COUNT(*) AS total, MIN(a."createdAt") AS sejak, MAX(a."updatedAt") AS last_updated
+  SELECT COUNT(*) AS total, MIN(a.createdAt) AS sejak, MAX(a.updatedAt) AS last_updated
   FROM mapel a
   LIMIT 1
   `,

@@ -114,5 +114,5 @@ exports.addMapel = async (field) => {
 exports.restartIncrement = async () => {
   const getLastId = await Mapel.findOne({ order: [["id", "DESC"]] });
   let last = getLastId ? getLastId.id + 1 : 1;
-  await sequelize.query(`ALTER SEQUENCE "mapel_id_seq" RESTART WITH ` + last);
+  await sequelize.query(`ALTER TABLE mapel AUTO_INCREMENT = ` + last);
 };

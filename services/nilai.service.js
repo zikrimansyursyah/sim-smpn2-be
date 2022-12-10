@@ -7,6 +7,7 @@ exports.findUserKHS = async (req) => {
   try {
     const { nilai, mapel } = await nilaiRepository.findUserKHS(id_kelas, is_siswa ? userLogged.id : id_siswa, semester, kelas);
 
+    console.log(nilai)
     let dataKHS = [];
 
     if (!nilai.length) {
@@ -16,6 +17,7 @@ exports.findUserKHS = async (req) => {
           nama_mapel: item.nama,
           nama_kelas: item.nama_kelas,
           semester: semester,
+          bobot: item.bobot,
           nil_kehadiran: 0,
           nil_tugas: 0,
           nil_uts: 0,
@@ -38,6 +40,7 @@ exports.findUserKHS = async (req) => {
             id_mapel: nil_item.id_mapel,
             nama_mapel: nil_item.nama_mapel,
             nama_kelas: nil_item.nama_kelas,
+            bobot: nil_item.bobot_mapel,
             semester: semester,
             nil_kehadiran: nil_item.nil_kehadiran,
             nil_tugas: nil_item.nil_tugas,
@@ -53,6 +56,7 @@ exports.findUserKHS = async (req) => {
           nama_mapel: item.nama,
           nama_kelas: item.nama_kelas,
           semester: semester,
+          bobot: item.bobot,
           nil_kehadiran: 0,
           nil_tugas: 0,
           nil_uts: 0,
@@ -296,13 +300,13 @@ exports.findRangkumanNilai = async (req) => {
 
   try {
     const rangNilai = await nilaiRepository.findRangkumanNilai(id_siswa);
-    
+
     let datas = []
-      
+
     rangNilai.map((e) => {
-          const total_nilai = Math.round((e.nil_kehadiran + e.nil_tugas + e.nil_uts + e.nil_uas) / 4)
-          let temp = { ...e, total_nilai };
-          datas.push(temp)
+      const total_nilai = Math.round((e.nil_kehadiran + e.nil_tugas + e.nil_uts + e.nil_uas) / 4)
+      let temp = { ...e, total_nilai };
+      datas.push(temp)
     })
 
     return {

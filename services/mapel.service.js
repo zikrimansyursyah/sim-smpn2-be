@@ -5,6 +5,7 @@ exports.findAllMapel = async () => {
   try {
     const mapel = await mapelRepository.findAllMapel();
 
+    console.log(mapel)
     if (!mapel) {
       return {
         httpCode: httpCode.notFound,
@@ -165,6 +166,7 @@ exports.createMapel = async (req) => {
     let field = {
       nama: req.fields.nama,
       kelas: req.fields.kelas,
+      bobot: req.fields.bobot,
       createdAt: new Date(),
       updateAt: new Date(),
       createdBy: userLogged.id,
@@ -177,7 +179,6 @@ exports.createMapel = async (req) => {
         httpCode: httpCode.forbidden,
         message: "data tersebut sudah ada",
       };
-      4;
     }
 
     await mapelRepository.restartIncrement();

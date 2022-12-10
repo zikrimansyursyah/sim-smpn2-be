@@ -52,6 +52,14 @@ exports.findAllPengajar = async (offset, limit, filter) => {
         )`),
           "mapel",
         ],
+        [
+          sequelize.literal(`(
+          SELECT mapel.bobot
+          FROM mapel as mapel
+          WHERE mapel.id = pengajar.id_mapel
+        )`),
+          "bobot_mapel",
+        ],
       ],
     },
   });

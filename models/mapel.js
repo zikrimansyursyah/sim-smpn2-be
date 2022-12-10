@@ -17,6 +17,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
+      bobot: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        field: 'bobot'
+      },
       createdBy: {
         type: DataTypes.INTEGER,
         allowNull: false,

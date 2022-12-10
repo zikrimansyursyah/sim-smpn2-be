@@ -29,6 +29,14 @@ exports.findUserKHS = async (id_kelas, id_siswa, semester, kelas) => {
                     )`),
           "nama_mapel",
         ],
+        [
+          sequelize.literal(`(
+                        SELECT mapel.bobot
+                        FROM mapel as mapel
+                        WHERE mapel.id = nilai.id_mapel
+                    )`),
+          "bobot_mapel",
+        ],
       ],
     },
     raw: true,

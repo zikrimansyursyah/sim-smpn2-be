@@ -304,7 +304,9 @@ exports.findRangkumanNilai = async (req) => {
     let datas = []
 
     rangNilai.map((e) => {
-      const total_nilai = Math.round((e.nil_kehadiran + e.nil_tugas + e.nil_uts + e.nil_uas) / 4)
+      let tugas = Math.round((e.nil_kehadiran + e.nil_tugas) / 2);
+      const total_nilai = Math.round(((tugas * 40) / 100) + ((e.nil_uts * 30) / 100) + ((e.nil_uas * 30) / 100));
+      // const total_nilai = Math.round((e.nil_kehadiran + e.nil_tugas + e.nil_uts + e.nil_uas) / 4)
       let temp = { ...e, total_nilai };
       datas.push(temp)
     })
